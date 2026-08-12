@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>صحتي — تذكير الفحوصات والأدوية</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>💊 صحتي</h1>
+            <p>تذكير ذكي بالفحوصات والأدوية — يعمل بدون إنترنت</p>
+        </header>
+
+        <div class="stats">
+            <div class="stat"><div class="stat-value" id="statExams">0</div><div class="stat-label">الفحوصات</div></div>
+            <div class="stat"><div class="stat-value" id="statMeds">0</div><div class="stat-label">الأدوية</div></div>
+        </div>
+
+        <div class="tabs">
+            <button class="tab active" data-target="dashboard">📋 التنبيهات</button>
+            <button class="tab" data-target="exams">🩺 الفحوصات</button>
+            <button class="tab" data-target="meds">💊 الأدوية</button>
+        </div>
+
+        <div id="dashboard" class="section active">
+            <div class="card">
+                <div class="card-title">🔔 التنبيهات القادمة</div>
+                <div class="info-box">
+                    📌 <strong>كيفية التنبيه:</strong><br>
+                    • الفحص: تنبيه قبل <strong>أسبوع</strong> من موعد الفحص لحجز موعد الطبيب<br>
+                    • الدواء: تنبيه قبل <strong>يومين</strong> من انتهاء الدواء لشراء العبوة الجديدة<br>
+                    • عند تعدد الأدوية: التنبيه يعتمد على الدواء الأقرب انتهاءً
+                </div>
+                <div id="alertsList"></div>
+            </div>
+        </div>
+
+        <div id="exams" class="section">
+            <div class="card">
+                <div class="card-title">➕ إضافة فحص دوري</div>
+                <div class="form-group">
+                    <label>نوع الفحص *</label>
+                    <input type="text" id="examName" placeholder="مثال: تحليل سكر صائم، ضغط دم...">
+                </div>
+                <div class="form-group">
+                    <label>تاريخ آخر فحص *</label>
+                    <input type="date" id="examDate">
+                </div>
+                <div class="form-group">
+                    <label>التكرار (كل كم شهر؟) *</label>
+                    <select id="examFreq">
+                        <option value="1">كل شهر</option>
+                        <option value="2">كل شهرين</option>
+                        <option value="3" selected>كل 3 أشهر</option>
+                        <option value="6">كل 6 أشهر</option>
+                        <option value="12">كل سنة</option>
+                    </select>
+                    <div class="hint">سيُحسب موعد الفحص القادم تلقائياً إذا لم تُحدد تاريخ الموعد أدناه</div>
+                </div>
+                <div class="form-group">
+                    <label>📅 تاريخ الموعد القادم (اختياري)</label>
+                    <input type="date" id="examNextDate">
+                    <div class="hint">إذا حدده الطبيب بتاريخ محدد، اكتبه هنا</div>
+                </div>
+                <div class="form-group">
+                    <label>📝 توصية الطبيب (اختياري)</label>
+                    <textarea id="examRec" placeholder="مثال: إجراء تحليل دم شامل + فحص بالأشعة..."></textarea>
+                </div>
+                <button class="btn btn-primary" id="btnAddExam">حفظ الفحص</button>
+            </div>
+            <div id="examsList"></div>
+        </div>
+
+        <div id="meds" class="section">
+            <div class="card">
+                <div class="card-title">➕ إضافة دواء</div>
+                <div class="form-group">
+                    <label>اسم الدواء *</label>
+                    <div class="autocomplete-wrap">
+                        <input type="text" id="medName" placeholder="اكتب اسم الدواء أو اختر من الأسفل..." autocomplete="off">
+                        <div class="autocomplete-list" id="autocompleteList"></div>
+                    </div>
+                    <div id="savedMedsChips"></div>
+                </div>
+                <div class="row">
+                    <div class="form-group">
+                        <label>تاريخ بدء التناول *</label>
+                        <input type="date" id="medStart">
+                    </div>
+                    <div class="form-group">
+                        <label>عدد العلب *</label>
+                        <input type="number" id="medBoxes" placeholder="مثال: 2" min="1" value="1">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group">
+                        <label>حبات كل علبة *</label>
+                        <input type="number" id="medPerBox" placeholder="مثال: 30" min="1">
+                    </div>
+                    <div class="form-group">
+                        <label>الجرعة اليومية *</label>
+                        <input type="number" id="medDose" placeholder="مثال: 2" min="1">
+                    </div>
+                </div>
+                <button class="btn btn-primary" id="btnAddMed">حفظ الدواء</button>
+            </div>
+            <div id="medsList"></div>
+        </div>
+    </div>
+
+    <div class="notification" id="toast"></div>
+    <script src="app.js"></script>
+</body>
+      </html>
+      
