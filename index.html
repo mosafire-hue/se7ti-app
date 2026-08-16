@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>صحتي</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',Tahoma,sans-serif}
+body{background:#f0fdfa;color:#1e293b;min-height:100vh}
+.c{max-width:600px;margin:0 auto;padding:16px}
+header{text-align:center;padding:20px 0}
+h1{color:#0f766e;font-size:1.7rem}
+.tabs{display:flex;gap:6px;margin-bottom:16px;background:#fff;padding:5px;border-radius:10px}
+.tab{flex:1;padding:12px;text-align:center;border-radius:8px;cursor:pointer;font-weight:600;color:#64748b;background:transparent;border:none;font-size:.95rem}
+.tab.on{background:#0d9488;color:#fff}
+.sec{display:none;padding-bottom:40px}
+.sec.on{display:block}
+.card{background:#fff;border-radius:14px;padding:18px;margin-bottom:14px;box-shadow:0 1px 4px rgba(0,0,0,.06)}
+.tit{font-size:1.05rem;color:#0f766e;font-weight:700;margin-bottom:12px}
+.fg{margin-bottom:12px}
+label{display:block;margin-bottom:4px;font-weight:600;font-size:.9rem}
+input,select,textarea{width:100%;padding:11px 12px;border:2px solid #ccfbf1;border-radius:8px;font-size:.95rem}
+textarea{min-height:60px;resize:vertical}
+.r{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.btn{width:100%;padding:13px;border:none;border-radius:8px;font-size:1rem;font-weight:700;background:#0d9488;color:#fff;cursor:pointer}
+.alert{background:#fff7ed;border-right:4px solid #f59e0b;padding:12px;border-radius:8px;margin-bottom:10px}
+.bdg{display:inline-block;padding:2px 8px;border-radius:12px;font-size:.7rem;font-weight:700;margin-right:6px}
+.bd{background:#fee2e2;color:#991b1b}
+.bo{background:#d1fae5;color:#065f46}
+.emp{text-align:center;padding:30px;color:#94a3b8}
+.it{background:#f8fafc;border-radius:10px;padding:12px;margin-bottom:8px;border:1px solid #e2e8f0;position:relative}
+.it .n{font-weight:700;font-size:1rem}
+.it .m{font-size:.82rem;color:#64748b;display:block;margin-top:3px;line-height:1.6}
+.del{position:absolute;top:8px;left:8px;background:#ef4444;color:#fff;border:none;width:26px;height:26px;border-radius:50%;cursor:pointer;font-size:1rem}
+.st{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px}
+.st div{background:#fff;padding:14px;border-radius:10px;text-align:center}
+.st b{font-size:1.5rem;color:#0d9488;display:block}
+#to{position:fixed;bottom:16px;left:50%;transform:translateX(-50%);background:#1e293b;color:#fff;padding:10px 20px;border-radius:40px;font-weight:600;opacity:0;transition:.3s;z-index:1000}
+#to.v{opacity:1}
+.ib{background:#eff6ff;border-right:4px solid #3b82f6;padding:10px;border-radius:6px;margin-bottom:12px;font-size:.85rem;color:#1e40af}
+@media(max-width:480px){.c{padding:12px}.r{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="c">
+<header><h1>💊 صحتي</h1></header>
+<div class="st"><div><b id="nE">0</b>الفحوصات</div><div><b id="nM">0</b>الأدوية</div></div>
+<div class="tabs">
+<button class="tab on" id="tb0">📋 التنبيهات</button>
+<button class="tab" id="tb1">🩺 الفحوصات</button>
+<button class="tab" id="tb2">💊 الأدوية</button>
+</div>
+<div class="sec on" id="sc0">
+<div class="card"><div class="tit">🔔 التنبيهات</div><div class="ib">📌 الفحص: قبل <b>أسبوع</b> | الدواء: قبل <b>يومين</b></div><div id="aL"></div></div>
+</div>
+<div class="sec" id="sc1">
+<div class="card">
+<div class="tit">➕ إضافة فحص</div>
+<div class="fg"><label>نوع الفحص *</label><input id="xN" placeholder="مثال: تحليل سكر"></div>
+<div class="fg"><label>تاريخ آخر فحص *</label><input type="date" id="xD"></div>
+<div class="fg"><label>التكرار *</label><select id="xF"><option value="1">كل شهر</option><option value="2">كل شهرين</option><option value="3" selected>كل 3 أشهر</option><option value="6">كل 6 أشهر</option><option value="12">كل سنة</option></select></div>
+<div class="fg"><label>📅 موعد القادم (اختياري)</label><input type="date" id="xT"></div>
+<div class="fg"><label>📝 توصية الطبيب (اختياري)</label><textarea id="xR" placeholder="مثال: تحليل دم + أشعة"></textarea></div>
+<button class="btn" id="bX">حفظ الفحص</button>
+</div>
+<div id="xL"></div>
+</div>
+<div class="sec" id="sc2">
+<div class="card">
+<div class="tit">➕ إضافة دواء</div>
+<div class="fg"><label>اسم الدواء *</label><input id="mN" placeholder="اكتب اسم الدواء..."></div>
+<div class="r"><div class="fg"><label>تاريخ البدء *</label><input type="date" id="mS"></div><div class="fg"><label>عدد العلب *</label><input type="number" id="mB" value="1" min="1"></div></div>
+<div class="r"><div class="fg"><label>حبات كل علبة *</label><input type="number" id="mP" placeholder="30" min="1"></div><div class="fg"><label>الجرعة اليومية *</label><input type="number" id="mO" placeholder="2" min="1"></div></div>
+<button class="btn" id="bM">حفظ الدواء</button>
+</div>
+<div id="mL"></div>
+</div>
+</div>
+<div id="to"></div>
+<script>
+(function(){
+var K='se7ti_v9',D={exams:[],meds:[]};
+function ld(){var r=localStorage.getItem(K);if(r)D=JSON.parse(r);rd();}
+function sv(){localStorage.setItem(K,JSON.stringify(D));rd();}
+function tm(m){var t=document.getElementById('to');t.textContent=m;t.className='v';setTimeout(function(){t.className='';},2500);}
+document.getElementById('tb0').onclick=function(){sw(0);};
+document.getElementById('tb1').onclick=function(){sw(1);};
+document.getElementById('tb2').onclick=function(){sw(2);};
+function sw(n){for(var i=0;i<3;i++){document.getElementById('tb'+i).className='tab'+(i===n?' on':'');document.getElementById('sc'+i).className='sec'+(i===n?' on':'');}}
+function td(){return new Date().toISOString().split('T')[0];}
+function ad(ds,d){var x=new Date(ds);x.setDate(x.getDate()+d);return x.toISOString().split('T')[0];}
+function am(ds,m){var x=new Date(ds);x.setMonth(x.getMonth()+parseInt(m));return x.toISOString().split('T')[0];}
+function df(f,t){return Math.ceil((new Date(t)-new Date(f))/864e5);}
+function fd(d){return new Date(d).toLocaleDateString('ar-SA',{year:'numeric',month:'long',day:'numeric'});}
+function gn(e){return e.next||am(e.date,e.freq);}
+document.getElementById('bX').onclick=function(){
+  var n=document.getElementById('xN').value.trim(),d=document.getElementById('xD').value,f=document.getElementById('xF').value,nt=document.getElementById('xT').value,r=document.getElementById('xR').value.trim();
+  if(!n||!d)return tm('❌ أكمل الحقول الإلزامية');
+  D.exams.push({id:Date.now(),name:n,date:d,freq:f,next:nt,rec:r});
+  sv();
+  document.getElementById('xN').value='';document.getElementById('xD').value='';document.getElementById('xT').value='';document.getElementById('xR').value='';
+  tm('✅ تم حفظ الفحص');
+};
+window.delX=function(id){D.exams=D.exams.filter(function(e){return e.id!==id;});sv();tm('🗑️ تم الحذف');};
+document.getElementById('bM').onclick=function(){
+  var n=document.getElementById('mN').value.trim(),b=parseInt(document.getElementById('mB').value)||1,p=parseInt(document.getElementById('mP').value),d=parseInt(document.getElementById('mO').value),s=document.getElementById('mS').value||td();
+  if(!n||!p||!d)return tm('❌ أكمل جميع الحقول');
+  var tq=b*p,dy=Math.floor(tq/d);
+  D.meds.push({id:Date.now(),name:n,boxes:b,perBox:p,total:tq,dose:d,start:s,days:dy});
+  sv();
+  document.getElementById('mN').value='';document.getElementById('mB').value='1';document.getElementById('mP').value='';document.getElementById('mO').value='';document.getElementById('mS').value='';
+  tm('✅ تم حفظ الدواء');
+};
+window.delM=function(id){D.meds=D.meds.filter(function(m){return m.id!==id;});sv();tm('🗑️ تم الحذف');};
+function rd(){
+  document.getElementById('nE').textContent=D.exams.length;
+  document.getElementById('nM').textContent=D.meds.length;
+  var c=document.getElementById('xL');
+  if(!D.exams.length){c.innerHTML='<div class="emp">🩺 لا توجد فحوصات</div>';}
+  else{c.innerHTML=D.exams.map(function(e){
+    var nx=gn(e),rm=df(td(),nx);
+    var bg=rm<=7?'<span class="bdg bd">قريب</span>':'<span class="bdg bo">بعيد</span>';
+    var nl=e.next?'📅 موعد محدد':'⏳ حساب تلقائي';
+    var rc=e.rec?'<div style="background:#eff6ff;border-right:3px solid #3b82f6;padding:6px 10px;border-radius:6px;margin-top:6px;font-size:.85rem;color:#1e40af">📝 '+e.rec+'</div>':'';
+    return '<div class="it"><button class="del" onclick="delX('+e.id+')">×</button><span class="n">'+e.name+' '+bg+'</span><span class="m">📅 آخر فحص: '+fd(e.date)+'<br>🔄 كل '+e.freq+' أشهر<br>'+nl+': '+fd(nx)+' ('+(rm<=0?'متأخر!':rm+' يوم')+')</span>'+rc+'</div>';
+  }).join('');}
+  c=document.getElementById('mL');
+  if(!D.meds.length){c.innerHTML='<div class="emp">💊 لا توجد أدوية</div>';}
+  else{c.innerHTML=D.meds.map(function(m){
+    var en=ad(m.start,m.days),rm=df(td(),en);
+    var bg=rm<=2?'<span class="bdg bd">ينفد!</span>':rm<=7?'<span class="bdg bd" style="background:#fef3c7;color:#92400e">أسبوع</span>':'<span class="bdg bo">متوفر</span>';
+    return '<div class="it"><button class="del" onclick="delM('+m.id+')">×</button><span class="n">'+m.name+' '+bg+'</span><span class="m">📦 '+m.boxes+' علبة × '+m.perBox+' حبة = <b>'+m.total+' حبة</b><br>💊 '+m.dose+'/يوم | تكفي <b>'+m.days+' يوم</b><br>📅 '+fd(m.start)+' → '+fd(en)+'<br>⏳ '+(rm<=0?'انتهى!':rm+' يوم')+'</span></div>';
+  }).join('');}
+  c=document.getElementById('aL');var al=[];
+  D.exams.forEach(function(e){
+    var nx=gn(e),d=df(td(),nx);
+    if(d<=7&&d>0)al.push({i:'🩺',t:'فحص '+e.name,d:'القادم '+fd(nx)+' — '+d+' أيام. اذهب للطبيب'+(e.rec?'<br>📝 '+e.rec:''),u:'d'});
+    else if(d<=0)al.push({i:'⚠️',t:'فحص '+e.name+' متأخر',d:'كان بتاريخ '+fd(nx)+(e.rec?'<br>📝 '+e.rec:''),u:'d'});
+  });
+  D.meds.forEach(function(m){
+    var en=ad(m.start,m.days),d=df(td(),en);
+    if(d<=2&&d>0)al.push({i:'💊',t:'دواء '+m.name+' ينفد!',d:'يتبقى '+d+(d===1?' يوم':' أيام')+' — تحضر للشراء',u:'d'});
+    else if(d<=0)al.push({i:'❌',t:'دواء '+m.name+' انتهى',d:'انتهى بتاريخ '+fd(en),u:'d'});
+  });
+  if(D.meds.length>1){
+    var am=D.meds.filter(function(m){return df(td(),ad(m.start,m.days))>0;});
+    if(am.length>1){
+      var md=am.map(function(m){return{n:m.name,d:df(td(),ad(m.start,m.days))};});
+      var sh=md.reduce(function(a,b){return a.d<b.d?a:b;});
+      if(sh.d<=7&&sh.d>2){
+        var om=md.filter(function(x){return x.n!==sh.n&&x.d>sh.d;});
+        al.push({i:'📋',t:'تنبيه ذكي',d:'"'+sh.n+'" الأقرب للانتهاء ('+sh.d+' يوم). اذهب للطبيب.'+(om.length?' (باقي: '+om.map(function(x){return x.n+' '+x.d+'ي';}).join('، ')+')':''),u:'w'});
+      }
+    }
+  }
+  if(!al.length){c.innerHTML='<div class="emp">🎉 لا توجد تنبيهات!</div>';}
+  else{al.sort(function(a,b){return a.u==='d'?-1:1;});c.innerHTML=al.map(function(a){return '<div class="alert"><b>'+a.i+' '+a.t+'</b><span style="color:#c2410c;font-size:.85rem;display:block;margin-top:3px">'+a.d+'</span></div>';}).join('');}
+}
+document.getElementById('xD').value=td();
+document.getElementById('mS').value=td();
+ld();
+})();
+</script>
+</body>
+</html>
